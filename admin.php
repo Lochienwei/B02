@@ -11,11 +11,13 @@
 	<link href="./css/css.css" rel="stylesheet" type="text/css">
 	<script src="./js/jquery-1.9.1.min.js"></script>
 	<script src="./js/js.js"></script>
-
 </head>
 
 <body>
-
+	<div id="alerr"
+		style="background:rgba(51,51,51,0.8); color:#FFF; min-height:100px; width:300px; position:fixed; display:none; z-index:9999; overflow:auto;">
+		<pre id="ssaa"></pre>
+	</div>
 	<iframe name="back" style="display:none;"></iframe>
 	<div id="all">
 		<div id="title">
@@ -30,11 +32,11 @@
 		</div>
 		<div id="mm">
 			<div class="hal" id="lef">
+				<a class="blo" href="?do=user">帳號管理</a>
 				<a class="blo" href="?do=po">分類網誌</a>
-				<a class="blo" href="?do=news">最新文章</a>
-				<a class="blo" href="?do=pop">人氣文章</a>
-				<a class="blo" href="?do=know">講座訊息</a>
-				<a class="blo" href="?do=que">問卷調查</a>
+				<a class="blo" href="?do=news">最新文章管理</a>
+				<a class="blo" href="?do=know">講座管理</a>
+				<a class="blo" href="?do=que">問卷管理</a>
 			</div>
 			<div class="hal" id="main">
 				<div>
@@ -43,7 +45,7 @@
 					</marquee>
 					<span style="width:18%; display:inline-block;">
 					<?php
-          //以登入的狀態來決定要顯示的內容為會員登入或會員帳號          
+          //以登入的狀態來決定要顯示的內容為會員登入或會員帳號
 						if(empty($_SESSION['login'])){
 							echo "<a href='?do=login'>會員登入</a>";
 						}else{
@@ -66,61 +68,32 @@
 						<?php
 							}
 						}
+
 						?>
 					</span>
 					<div class="">
-						<?php
-            //依照網址參數來決定中間區塊要載入那個檔案
-						$do=(!empty($_GET['do']))?$_GET['do']:"home";
-						switch($do){
-              case "home":
-                //主題內容頁
-								include "home.php";
-							break;
-              case "login":
-                //會員登入
-								include "login.php";
-							break;
-              case "reg":
-                //會員註冊
-								include "reg.php";
-							break;
-              case "forget":
-                //忘記密碼
-								include "forget.php";
-							break;
-              case "logout":
-                //登出
-								unset($_SESSION['login']);
-								to("index.php","");
-							break;
-              case "po":
-                //分類網誌
-								include "po.php";
-							break;
-              case "que":
-                //問卷調查
-								include "que.php";
-							break;
-              case "result":
-                //問卷結果
-								include "result.php";
-							break;
-              case "vote":
-                //參與投票
-								include "vote.php";
-							break;
-              case "news":
-                //最新文章
-								include "news.php";
-							break;
-              case "pop":
-                //人氣文章
-								include "pop.php";
-							break;
-						}
-						?>
+					<?php
+          //依照網址參數來決定中間區塊要載入那個檔案
+					$do=(!empty($_GET['do']))?$_GET['do']:"";
+					switch($do){
+            case "user":
+              //會員管理
+							include "ad_user.php";
+						break;
+            case "news":
+              //最新文章管理
+							include "ad_news.php";
+						break;
+            case "que":
+              //問卷管理
+							include "ad_que.php";
+						break;
+            default:
+            //不在功能中的項目一律顯示以下文字內容
+						echo "<h1 class='ct'>請選擇管理項目</h1>";
 
+					}
+				?>
 					</div>
 				</div>
 			</div>
